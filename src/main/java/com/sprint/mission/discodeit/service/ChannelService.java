@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.UUID;
 
 public interface ChannelService {
-    Channel create(String name);
+    Channel create(String CHname);
     Channel findById(UUID id);
     List<Channel> findAll();
-    void update(UUID id, String newName);
+    void update(UUID id, String newCHname);
     void delete(UUID id);
 }
