@@ -27,6 +27,7 @@ import java.util.Scanner;
 import java.util.UUID;
 
 public class JavaApplication {
+    /*
     private static final Scanner scanner = new Scanner(System.in);
     private static final UserService userService = new FileUserService();
     private static final ChannelService channelService = new FileChannelService();
@@ -362,5 +363,201 @@ public class JavaApplication {
         } catch (IllegalArgumentException e) {
             System.out.println("It is not in UUID format.");
         }
+    }
+
+     */
+
+    //===================jcf기반====================================
+    private static final UserService    userService =
+            new JCFUserService(new JCFUserRepository());
+
+    private static final ChannelService channelService =
+            new JCFChannelService(new JCFChannelRepository());
+
+    private static final MessageService messageService =
+            new JCFMessageService(
+                    new JCFMessageRepository(),
+                    channelService,
+                    userService);
+
+    private static final Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) {
+
+        while (true) {
+            printMenu();
+            String choice = scanner.nextLine().trim();
+
+            switch (choice) {
+                case "1" -> userMenu();
+                case "2" -> channelMenu();
+                case "3" -> messageMenu();
+                case "0" -> {
+                    System.out.println("프로그램을 종료합니다.");
+                    return;
+                }
+                default -> System.out.println("잘못된 선택입니다.");
+            }
+        }
+    }
+
+    private static void printMenu() {
+        System.out.println("\n=== 메인 메뉴 ===");
+        System.out.println("1. User menu");
+        System.out.println("2. Channel menu");
+        System.out.println("3. Message menu");
+        System.out.println("0. Exit");
+        System.out.print("Choice: ");
+    }
+
+//----------user-------------------------------------
+    private static void userMenu() {
+        System.out.println("\n=== User menu ===");
+        System.out.println("1. Create user");
+        System.out.println("2. View user");
+        System.out.println("3. View all users");
+        System.out.println("4. Edit user");
+        System.out.println("5. Delete user");
+        System.out.println("0. Back");
+        System.out.print("Choice: ");
+
+        switch (scanner.nextLine().trim()) {
+            case "1" -> createUser();
+            case "2" -> findUser();
+            case "3" -> listUsers();
+            case "4" -> updateUser();
+            case "5" -> deleteUser();
+            default  -> System.out.println("잘못된 선택입니다.");
+        }
+    }
+    private static void createUser() {
+        System.out.print("Nickname: "); String nick = scanner.nextLine();
+        System.out.print("Email: ");    String mail = scanner.nextLine();
+        System.out.print("Password: "); String pw   = scanner.nextLine();
+        System.out.println("Created: " + userService.create(nick, mail, pw));
+    }
+    private static void findUser() {
+        System.out.print("User ID: ");
+        try { System.out.println(userService.find(UUID.fromString(scanner.nextLine()))); }
+        catch (IllegalArgumentException e) { System.out.println("잘못된 UUID 형식"); }
+    }
+    private static void listUsers() {
+        userService.findAll().forEach(System.out::println);
+    }
+    private static void updateUser() {
+        try {
+            System.out.print("ID: "); UUID id = UUID.fromString(scanner.nextLine());
+            System.out.print("New nickname: "); String n = scanner.nextLine();
+            System.out.print("New email: ");    String m = scanner.nextLine();
+            System.out.print("New password: "); String p = scanner.nextLine();
+            System.out.println("Updated: " + userService.update(id, n, m, p));
+        } catch (IllegalArgumentException e) {
+            System.out.println("잘못된 UUID 형식");
+        }
+    }
+    private static void deleteUser() {
+        try {
+            System.out.print("ID: "); UUID id = UUID.fromString(scanner.nextLine());
+            userService.delete(id);
+            System.out.println("Deleted");
+        } catch (IllegalArgumentException e) { System.out.println("잘못된 UUID 형식"); }
+    }
+
+//-----------channel-------------------------
+    private static void channelMenu() {
+        System.out.println("\n=== Channel menu ===");
+        System.out.println("1. Create channel");
+        System.out.println("2. View channel");
+        System.out.println("3. View all channels");
+        System.out.println("4. Edit channel");
+        System.out.println("5. Delete channel");
+        System.out.println("0. Back");
+        System.out.print("Choice: ");
+
+        switch (scanner.nextLine().trim()) {
+            case "1" -> createChannel();
+            case "2" -> findChannel();
+            case "3" -> listChannels();
+            case "4" -> updateChannel();
+            case "5" -> deleteChannel();
+            default  -> System.out.println("잘못된 선택입니다.");
+        }
+    }
+    private static void createChannel() {
+        System.out.print("Channel name: ");
+        System.out.println("Created: " + channelService.create(scanner.nextLine()));
+    }
+    private static void findChannel() {
+        System.out.print("Channel ID: ");
+        try { System.out.println(channelService.findById(UUID.fromString(scanner.nextLine()))); }
+        catch (IllegalArgumentException e) { System.out.println("잘못된 UUID 형식"); }
+    }
+    private static void listChannels() {
+        channelService.findAll().forEach(System.out::println);
+    }
+    private static void updateChannel() {
+        try {
+            System.out.print("ID: "); UUID id = UUID.fromString(scanner.nextLine());
+            System.out.print("New name: "); String name = scanner.nextLine();
+            System.out.println("Updated: " + channelService.update(id, name));
+        } catch (IllegalArgumentException e) { System.out.println("잘못된 UUID 형식"); }
+    }
+    private static void deleteChannel() {
+        try {
+            System.out.print("ID: "); UUID id = UUID.fromString(scanner.nextLine());
+            channelService.delete(id);
+            System.out.println("Deleted");
+        } catch (IllegalArgumentException e) { System.out.println("잘못된 UUID 형식"); }
+    }
+
+//===============message=================================
+    private static void messageMenu() {
+        System.out.println("\n=== Message menu ===");
+        System.out.println("1. Create message");
+        System.out.println("2. View message");
+        System.out.println("3. View all messages");
+        System.out.println("4. Edit message");
+        System.out.println("5. Delete message");
+        System.out.println("0. Back");
+        System.out.print("Choice: ");
+
+        switch (scanner.nextLine().trim()) {
+            case "1" -> createMessage();
+            case "2" -> findMessage();
+            case "3" -> listMessages();
+            case "4" -> updateMessage();
+            case "5" -> deleteMessage();
+            default  -> System.out.println("잘못된 선택입니다.");
+        }
+    }
+    private static void createMessage() {
+        try {
+            System.out.print("Channel ID: "); UUID ch = UUID.fromString(scanner.nextLine());
+            System.out.print("Author ID : ");  UUID au = UUID.fromString(scanner.nextLine());
+            System.out.print("Content   : ");  String txt = scanner.nextLine();
+            System.out.println("Created: " + messageService.create(ch, au, txt));
+        } catch (IllegalArgumentException e) { System.out.println("잘못된 UUID 형식"); }
+    }
+    private static void findMessage() {
+        System.out.print("Message ID: ");
+        try { System.out.println(messageService.findById(UUID.fromString(scanner.nextLine()))); }
+        catch (IllegalArgumentException e) { System.out.println("잘못된 UUID 형식"); }
+    }
+    private static void listMessages() {
+        messageService.findAll().forEach(System.out::println);
+    }
+    private static void updateMessage() {
+        try {
+            System.out.print("ID: "); UUID id = UUID.fromString(scanner.nextLine());
+            System.out.print("New content: "); String txt = scanner.nextLine();
+            System.out.println("Updated: " + messageService.update(id, txt));
+        } catch (IllegalArgumentException e) { System.out.println("잘못된 UUID 형식"); }
+    }
+    private static void deleteMessage() {
+        try {
+            System.out.print("ID: "); UUID id = UUID.fromString(scanner.nextLine());
+            messageService.delete(id);
+            System.out.println("Deleted");
+        } catch (IllegalArgumentException e) { System.out.println("잘못된 UUID 형식"); }
     }
 }
