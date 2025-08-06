@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1433377b-24f2-45fb-81d1-cfe9a869f5c4" name="변경" comment="jcf 출력문 추가 추가" />
+    <list default="true" id="1433377b-24f2-45fb-81d1-cfe9a869f5c4" name="변경" comment="test2-2">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -43,7 +45,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="박윤지-sprint2" />
         <entry key="$PROJECT_DIR$/../work_space_sprint" value="박윤지-sprint222" />
       </map>
     </option>
@@ -86,7 +88,7 @@
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;박윤지-sprint2&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;test2&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/1014y/IdeaProjects/5-sprint-mission-2&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -123,6 +125,8 @@
       <workItem from="1753927564674" duration="223000" />
       <workItem from="1753928208636" duration="10000" />
       <workItem from="1754439938582" duration="198000" />
+      <workItem from="1754442683634" duration="301000" />
+      <workItem from="1754443634088" duration="10000" />
     </task>
     <task id="LOCAL-00001" summary=".">
       <option name="closed" value="true" />
@@ -148,7 +152,23 @@
       <option name="project" value="LOCAL" />
       <updated>1753923517969</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="test2">
+      <option name="closed" value="true" />
+      <created>1754442742938</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1754442742938</updated>
+    </task>
+    <task id="LOCAL-00005" summary="test2-2">
+      <option name="closed" value="true" />
+      <created>1754442884982</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1754442884982</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -160,6 +180,8 @@
     <MESSAGE value="브랜치 생성" />
     <MESSAGE value="jcf 파일 추가" />
     <MESSAGE value="jcf 출력문 추가 추가" />
-    <option name="LAST_COMMIT_MESSAGE" value="jcf 출력문 추가 추가" />
+    <MESSAGE value="test2" />
+    <MESSAGE value="test2-2" />
+    <option name="LAST_COMMIT_MESSAGE" value="test2-2" />
   </component>
 </project>
