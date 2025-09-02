@@ -25,18 +25,18 @@ Spring Data JPA 적용하기
 [o] 영속성 컨텍스트의 특징에 맞추어 서비스 레이어를 수정해보세요.
 
 DTO 적극 도입하기
-[ ] Entity를 Controller 까지 그대로 노출했을 때 발생할 수 있는 문제점에 대해 정리해보세요. DTO를 적극 도입했을 때 보일러플레이트 코드가 많아지지만, 그럼에도 불구하고 어떤 이점이 있는지 알 수 있을거에요.(이 내용은 PR에 첨부해주세요.)
-[ ] 다음의 클래스 다이어그램을 참고하여 DTO를 정의하세요.
-[ ]  Entity를 DTO로 매핑하는 로직을 책임지는 Mapper 컴포넌트를 정의해 반복되는 코드를 줄여보세요.
+[o] Entity를 Controller 까지 그대로 노출했을 때 발생할 수 있는 문제점에 대해 정리해보세요. DTO를 적극 도입했을 때 보일러플레이트 코드가 많아지지만, 그럼에도 불구하고 어떤 이점이 있는지 알 수 있을거에요.(이 내용은 PR에 첨부해주세요.)
+[o] 다음의 클래스 다이어그램을 참고하여 DTO를 정의하세요.
+[o]  Entity를 DTO로 매핑하는 로직을 책임지는 Mapper 컴포넌트를 정의해 반복되는 코드를 줄여보세요.
 
 BinaryContent 저장 로직 고도화
-[ ]  BinaryContent 엔티티는 파일의 메타 정보(fileName, size, contentType)만 표현하도록 bytes 속성을 제거하세요.
-[ ]  BinaryContent의 byte[] 데이터 저장을 담당하는 인터페이스를 설계하세요.
-[ ]  서비스 레이어에서 기존에 BinaryContent를 저장하던 로직을 BinaryContentStorage를 활용하도록 리팩토링하세요.
+[o]  BinaryContent 엔티티는 파일의 메타 정보(fileName, size, contentType)만 표현하도록 bytes 속성을 제거하세요.
+[o]  BinaryContent의 byte[] 데이터 저장을 담당하는 인터페이스를 설계하세요.
+[o]  서비스 레이어에서 기존에 BinaryContent를 저장하던 로직을 BinaryContentStorage를 활용하도록 리팩토링하세요.
 
-[ ]  BinaryContentController에 파일을 다운로드하는 API를 추가하고, BinaryContentStorage에 로직을 위임하세요.
-[ ]  로컬 디스크 저장 방식으로 BinaryContentStorage 구현체를 구현하세요.
-[ ]  discodeit.storage.type 값이 local 인 경우에만 Bean으로 등록되어야 합니다.
+[o]  BinaryContentController에 파일을 다운로드하는 API를 추가하고, BinaryContentStorage에 로직을 위임하세요.
+[o]  로컬 디스크 저장 방식으로 BinaryContentStorage 구현체를 구현하세요.
+[o]  discodeit.storage.type 값이 local 인 경우에만 Bean으로 등록되어야 합니다.
 
 페이징과 정렬
 [ ] 메시지 목록을 조회할 때 다음의 조건에 따라 페이지네이션 처리를 해보세요.
@@ -45,8 +45,38 @@ BinaryContent 저장 로직 고도화
 
 
 Entity를 Controller 까지 그대로 노출했을 때 발생할 수 있는 문제점
+노출시 발생하는 문제
 
+보일러플레이트 코드란?
+보일러플레이트(boilerplate) 코드는 비즈니스 로직과 직접적 가치를 만들진 않지만, 
+언어나 프레임워크를 쓰기 위해 반복적으로 써야 하는 상투적 코드
+예시)
 
+MessageResponse toDto(Message m) {
+return new MessageResponse(
+m.getId(), m.getContent(),
+m.getChannel().getId(),
+m.getAuthor() != null ? m.getAuthor().getId() : null,
+m.getCreatedAt(),
+m.getAttachments().stream().map(BinaryContent::getId).toList()
+);
+}
+
+줄이는 예시 코드
+@Mapper(componentModel = "spring")
+public interface MessageMapper {
+@Mapping(target="channelId", source="channel.id")
+@Mapping(target="authorId",  source="author.id")
+@Mapping(target="attachmentIds", expression="java(m.getAttachments().stream().map(BinaryContent::getId).toList())")
+MessageResponse toDto(Message m);
+}
+
+1. 도메인-API 결합
+2. 양방향 순환 참조
+3. 민감정보 노출
+4. 내부 식별자/스키마 유출
+5. 버전 관리 어려움
+6. 페이로드 과다/성능
 
 
 

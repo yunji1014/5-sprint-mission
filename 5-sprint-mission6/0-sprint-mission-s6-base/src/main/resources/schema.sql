@@ -1,3 +1,4 @@
+ALTER TABLE binary_contents DROP COLUMN IF EXISTS bytes;
 -- ===== 확장: UUID 생성 함수 (DB에서 UUID 자동 발급)
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 

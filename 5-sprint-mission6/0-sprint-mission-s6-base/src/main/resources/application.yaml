@@ -34,5 +34,5 @@ logging:
 
 discodeit:
   repository:
-    type: file                    # 당장은 file 모드 그대로(나중에 DB 모드로 전환)
-    file-directory: .discodeit
+    type: local
+    file-directory: .discodeit/files

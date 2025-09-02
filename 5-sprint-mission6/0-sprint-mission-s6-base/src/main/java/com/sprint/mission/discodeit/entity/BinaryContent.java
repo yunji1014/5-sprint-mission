@@ -26,15 +26,10 @@ public class BinaryContent extends BaseEntity {
   @Column(name = "content_type", nullable = false, length = 100)
   private String contentType;
 
-  @Lob
-  @Column(name = "bytes", nullable = false)
-  private byte[] bytes;
-
-  public BinaryContent(String fileName, long size, String contentType, byte[] bytes) {
+  public BinaryContent(String fileName, long size, String contentType) {
     this.fileName = fileName;
     this.size = size;
     this.contentType = contentType;
-    this.bytes = bytes;
   }
 
   public void updateMeta(String fileName, long size, String contentType) {
